@@ -1,0 +1,59 @@
+{
+  "name": "na-infra-core",
+  "version": "0.1.0",
+  "bin": {
+    "cdk": "cdk/bin/cdk.js",
+    "aws-set-profile": "aws-credential-config.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk-bootstrap": ". ./params.env && cdk bootstrap --debug ",
+    "format": "prettier --write \"{infra,src,test}/**/*.{js,ts}\"",
+    "stack-destroy": ". ./params.env && cdk destroy --debug ",
+    "stack-synth-dev": "DEPLOYMENT_TARGET=dev . ./params.env && cdk synth --debug ",
+    "stack-diff-dev": "DEPLOYMENT_TARGET=dev . ./params.env && cdk diff --debug ",
+    "stack-deploy-dev": "DEPLOYMENT_TARGET=dev . ./params.env && cdk deploy --debug --require-approval never ",
+    "stack-synth-staging": "DEPLOYMENT_TARGET=staging . ./params.env && cdk synth --debug ",
+    "stack-diff-staging": "DEPLOYMENT_TARGET=staging . ./params.env && cdk diff --debug ",
+    "stack-deploy-staging": "DEPLOYMENT_TARGET=staging . ./params.env && cdk deploy --debug --require-approval never ",
+    "stack-synth-prod": "DEPLOYMENT_TARGET=prod . ./params.env && cdk synth --debug ",
+    "stack-diff-prod": "DEPLOYMENT_TARGET=prod . ./params.env && cdk diff --debug ",
+    "stack-deploy-prod": "DEPLOYMENT_TARGET=prod . ./params.env && cdk deploy --debug --require-approval never ",
+    "npm-login": "AWS_DEFAULT_REGION=us-east-1 npm run aws-assume-role && npm run npm-pl && AWS_PROFILE=sa npm run npm-sa",
+    "npm-pl": "aws codeartifact login --tool npm --repository pl-npm --domain pl-npm --domain-owner 135700256913 --namespace @pl",
+    "npm-sa": "aws codeartifact login --tool npm --repository na-npm --domain na-npm --domain-owner 904816034997 --namespace @sa",
+    "aws-assume-role": "./node_modules/.bin/aws-assume-role --profile na-org"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.146",
+    "@types/aws4": "^1.11.6",
+    "@types/jest": "^26.0.24",
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^10.17.60",
+    "aws-cdk": "^2.172.0",
+    "aws-cdk-lib": "^2.172.0",
+    "constructs": "^10.4.2",
+    "esbuild": "^0.19.12",
+    "jest": "^29.7.0",
+    "prettier": "^3.4.2",
+    "prisma": "^5.22.0",
+    "source-map-support": "^0.5.21",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@aws-sdk/client-apigatewaymanagementapi": "^3.699.0",
+    "@aws-sdk/client-dynamodb": "^3.705.0",
+    "@aws-sdk/client-sqs": "^3.699.0",
+    "@aws-sdk/lib-dynamodb": "^3.705.0",
+    "@prisma/client": "^5.22.0",
+    "aws-lambda": "^1.0.7",
+    "aws4": "^1.13.2",
+    "cdk-ec2-key-pair": "^3.3.3",
+    "minimist": "^1.2.8",
+    "ssh2-sftp-client": "^7.2.3"
+  }
+}
